@@ -80,11 +80,35 @@ class PaginatedArrayCollection extends ArrayCollection
     }
 
     /**
+     * @return int
+     */
+    public function getFirstPage()
+    {
+        if (0 == $this->getPages()) {
+            return null;
+        }
+
+        return 1;
+    }
+
+    /**
+     * @return int
+     */
+    public function getLastPage()
+    {
+        if (0 == $this->getPages()) {
+            return null;
+        }
+
+        return $this->getPages();
+    }
+
+    /**
      * @return int|null
      */
     public function getNextPage()
     {
-        if ($this->getPage() < $this->getPages()) {
+        if (!$this->isLastPage()) {
             return $this->getPage() + 1;
         }
 
@@ -96,10 +120,26 @@ class PaginatedArrayCollection extends ArrayCollection
      */
     public function getPrevPage()
     {
-        if ($this->getPage() > 1) {
+        if (!$this->isFirstPage()) {
             return $this->getPage() - 1;
         }
 
         return null;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isFirstPage()
+    {
+        return $this->getPage() == 1;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isLastPage()
+    {
+        return $this->getPage() === $this->getPages();
     }
 }

@@ -11,6 +11,24 @@ use Jhg\DoctrinePagination\Collection\PaginatedArrayCollection;
 class PaginatedRepository extends EntityRepository
 {
     /**
+     * {@inheritdoc}
+     */
+    public function findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+    {
+        if ($offset !== null && $limit) {
+            $page = ceil($offset/$limit) + 1;
+        } else {
+            $page = 1;
+        }
+
+        if (!$limit) {
+            $limit = 100000000;
+        }
+
+        return $this->findPageBy($page, $limit, $criteria, $orderBy);
+    }
+
+    /**
      * @param int   $page
      * @param int   $rpp
      * @param array $criteria
@@ -22,7 +40,9 @@ class PaginatedRepository extends EntityRepository
     {
         $qb = $this->createPaginatedQueryBuilder($criteria);
         $qb->addSelect($this->getEntityAlias());
-        $qb->addOrder($orderBy, $this->getEntityAlias());
+        if (is_array($orderBy)) {
+            $qb->addOrder($orderBy, $this->getEntityAlias());
+        }
         $qb->addPagination($page, $rpp);
 
         $results = $qb->getQuery()->getResult();
