@@ -7,7 +7,7 @@ This library provides a paginated repository and collection for Doctrine.
 To install this bundle just execute:
 
 ```bash
-$ composer require doctrine-pagination:~1.0
+$ composer require javihgil/doctrine-pagination:~1.0
 ```
 
 ## Configure Repository
