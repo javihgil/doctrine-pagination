@@ -58,7 +58,7 @@ class PaginatedRepository extends EntityRepository
     public function countBy(array $criteria = [])
     {
         $qb = $this->createPaginatedQueryBuilder($criteria);
-        $qb->addSelect('COUNT('.$this->getEntityAlias().')');
+        $qb->select('COUNT('.$this->getEntityAlias().')');
 
         return (int) $qb->getQuery()->getSingleScalarResult();
     }
