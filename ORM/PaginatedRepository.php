@@ -89,8 +89,13 @@ class PaginatedRepository extends EntityRepository
     {
         foreach ($criteria as $field => $value) {
             $fieldParameter = 'f'.substr(md5($field), 0, 5);
-            $qb->andWhere(sprintf('%s.%s = :%s', $this->getEntityAlias(), $field, $fieldParameter));
-            $qb->setParameter($fieldParameter, $value);
+
+            if (is_null($value)) {
+                $qb->andWhere(sprintf('%s.%s IS NULL', $this->getEntityAlias(), $field));
+            } else {
+                $qb->andWhere(sprintf('%s.%s = :%s', $this->getEntityAlias(), $field, $fieldParameter));
+                $qb->setParameter($fieldParameter, $value);
+            }
         }
     }
 
