@@ -40,9 +40,7 @@ class PaginatedRepository extends EntityRepository
     {
         $qb = $this->createPaginatedQueryBuilder($criteria);
         $qb->addSelect($this->getEntityAlias());
-        if (is_array($orderBy)) {
-            $qb->addOrder($orderBy, $this->getEntityAlias());
-        }
+        $this->processOrderBy($qb, $orderBy);
         $qb->addPagination($page, $rpp);
 
         $results = $qb->getQuery()->getResult();
@@ -96,6 +94,17 @@ class PaginatedRepository extends EntityRepository
                 $qb->andWhere(sprintf('%s.%s = :%s', $this->getEntityAlias(), $field, $fieldParameter));
                 $qb->setParameter($fieldParameter, $value);
             }
+        }
+    }
+
+    /**
+     * @param PaginatedQueryBuilder $qb
+     * @param array|null            $orderBy
+     */
+    protected function processOrderBy(PaginatedQueryBuilder $qb, array $orderBy = null)
+    {
+        if (is_array($orderBy)) {
+            $qb->addOrder($orderBy, $this->getEntityAlias());
         }
     }
 
