@@ -18,7 +18,11 @@ class PaginatedQueryBuilder extends QueryBuilder
     public function addOrder(array $orderBy, $entityAlias = null)
     {
         foreach ($orderBy as $field => $order) {
-            $this->addOrderBy(($entityAlias?$entityAlias.'.':'').$field, $order);
+            if (preg_match('/^[a-z0-9][a-z0-9\_]+$/i', $field)) {
+                $this->addOrderBy(($entityAlias?$entityAlias.'.':'').$field, $order);
+            } else {
+                $this->addOrderBy($field, $order);
+            }
         }
 
         return $this;
