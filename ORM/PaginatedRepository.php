@@ -2,6 +2,7 @@
 
 namespace Jhg\DoctrinePagination\ORM;
 
+use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\EntityRepository;
 use Jhg\DoctrinePagination\Collection\PaginatedArrayCollection;
 
@@ -33,17 +34,18 @@ class PaginatedRepository extends EntityRepository
      * @param int   $rpp
      * @param array $criteria
      * @param array $orderBy
+     * @param int   $hydrateMode
      *
-     * @return array
+     * @return PaginatedArrayCollection
      */
-    public function findPageBy($page, $rpp, array $criteria = [], array $orderBy = null)
+    public function findPageBy($page, $rpp, array $criteria = [], array $orderBy = null, $hydrateMode = AbstractQuery::HYDRATE_OBJECT)
     {
         $qb = $this->createPaginatedQueryBuilder($criteria, null, $orderBy);
         $qb->addSelect($this->getEntityAlias());
         $this->processOrderBy($qb, $orderBy);
         $qb->addPagination($page, $rpp);
 
-        $results = $qb->getQuery()->getResult();
+        $results = $qb->getQuery()->getResult($hydrateMode);
         $total = $this->countBy($criteria);
 
         return new PaginatedArrayCollection($results, $page, $rpp, $total);
