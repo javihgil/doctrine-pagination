@@ -93,6 +93,8 @@ class PaginatedRepository extends EntityRepository
 
             if (is_null($value)) {
                 $qb->andWhere(sprintf('%s.%s IS NULL', $this->getEntityAlias(), $field));
+            } elseif (is_array($value)) {
+                $qb->andWhere($qb->expr()->in(sprintf('%s.%s', $this->getEntityAlias(), $field), $value));
             } else {
                 $qb->andWhere(sprintf('%s.%s = :%s', $this->getEntityAlias(), $field, $fieldParameter));
                 $qb->setParameter($fieldParameter, $value);
