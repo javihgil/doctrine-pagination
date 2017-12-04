@@ -3,8 +3,6 @@
     "description": "Doctrine pagination",
     "type": "library",
     "license": "MIT",
-    "minimum-stability": "dev",
-    "prefer-stable": true,
     "autoload": {
         "psr-4": {
             "Jhg\\DoctrinePagination\\": ""
