@@ -140,6 +140,6 @@ class PaginatedArrayCollection extends ArrayCollection
      */
     public function isLastPage()
     {
-        return $this->getPage() === $this->getPages();
+        return $this->getPage() == $this->getPages();
     }
 }
