@@ -1,18 +1,23 @@
-# Doctrine Pagination
+[![Latest Stable Version](https://poser.pugx.org/javihgil/doctrine-pagination/v/stable.svg)](https://packagist.org/packages/javihgil/doctrine-pagination)
+[![Latest Unstable Version](https://poser.pugx.org/javihgil/doctrine-pagination/v/unstable.svg)](https://packagist.org/packages/javihgil/doctrine-pagination)
+[![License](https://poser.pugx.org/javihgil/doctrine-pagination/license.svg)](https://packagist.org/packages/javihgil/doctrine-pagination)
+[![Total Downloads](https://poser.pugx.org/javihgil/doctrine-pagination/downloads)](https://packagist.org/packages/javihgil/doctrine-pagination)
 
 This library provides a paginated repository and collection for Doctrine.
 
-## Installation with composer
+# Installation
 
-To install this bundle just execute:
+## Applications that use Symfony Flex
 
-```bash
-$ composer require javihgil/doctrine-pagination:~1.0
+Open a command console, enter your project directory and execute:
+
+```console
+$ composer require javihgil/doctrine-pagination:^1.1@dev
 ```
 
-## Configure Repository
+# Configure Repository
 
-### Use it as Entity repository
+## Use it as Entity repository
 
 Configure PaginatedRepository in your entity:
 
@@ -33,7 +38,7 @@ class Task
 }
 ```
 
-### Create your custom Paginated repository
+## Create your custom Paginated repository
 
 Create custom repository extending PaginatedRepository:
 
@@ -92,7 +97,7 @@ protected function processCriteria(PaginatedQueryBuilder $qb, array $criteria)
 }
 ```
 
-## Using Paginated Repository
+# Using Paginated Repository
 
 *public* **findPageBy** *($page, $rpp, array $criteria = [], array $orderBy = null)*
 
@@ -118,7 +123,7 @@ This can be overridden to customize those criteria conditions.
 PaginatedRepository overrides findBy and findAll default Doctrine Repository methods to provides
  code compatibility.
 
-## Using Paginated Collections
+# Using Paginated Collections
 
 The PaginatedRepository always returns a PaginatedArrayCollection:
 
