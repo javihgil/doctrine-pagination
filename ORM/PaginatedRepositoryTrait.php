@@ -22,10 +22,16 @@ trait PaginatedRepositoryTrait
         $qb = $this->createPaginatedQueryBuilder($criteria, null, $orderBy);
         $qb->addSelect($this->getEntityAlias());
         $this->processOrderBy($qb, $orderBy);
-        $qb->addPagination($page, $rpp);
+
+        // find all
+        if ($rpp > 0) {
+            $qb->addPagination($page, $rpp);
+        }
 
         $results = $qb->getQuery()->getResult($hydrateMode);
-        $total = $this->countBy($criteria);
+
+        // find all
+        $total = ($rpp > 0) ? $this->countBy($criteria) : -1;
 
         return new PaginatedArrayCollection($results, $page, $rpp, $total);
     }

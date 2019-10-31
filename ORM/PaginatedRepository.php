@@ -19,16 +19,12 @@ class PaginatedRepository extends EntityRepository implements PaginatedRepositor
      */
     public function findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
     {
-        if ($offset !== null && $limit) {
+        if ($offset !== null && $limit !== null && $limit > 0) {
             $page = ceil($offset/$limit) + 1;
         } else {
             $page = 1;
         }
 
-        if (!$limit) {
-            $limit = 100000000;
-        }
-
-        return $this->findPageBy($page, $limit, $criteria, $orderBy);
+        return $this->findPageBy($page, $limit !== null && $limit > 0 ? $limit : -1, $criteria, $orderBy);
     }
 }
