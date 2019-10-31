@@ -3,6 +3,7 @@
 namespace Jhg\DoctrinePagination\ORM;
 
 use Doctrine\ORM\AbstractQuery;
+use Doctrine\ORM\NonUniqueResultException;
 use Jhg\DoctrinePagination\Collection\PaginatedArrayCollection;
 
 trait PaginatedRepositoryTrait
@@ -36,10 +37,14 @@ trait PaginatedRepositoryTrait
      */
     public function countBy(array $criteria = []): int
     {
-        $qb = $this->createPaginatedQueryBuilder($criteria);
-        $qb->select('COUNT('.$this->getEntityAlias().')');
+        try {
+            $qb = $this->createPaginatedQueryBuilder($criteria);
+            $qb->select('COUNT(' . $this->getEntityAlias() . ')');
 
-        return (int) $qb->getQuery()->getSingleScalarResult();
+            return (int)$qb->getQuery()->getSingleScalarResult();
+        } catch (NonUniqueResultException $e) {
+            return 0;
+        }
     }
 
     /**
@@ -63,18 +68,22 @@ trait PaginatedRepositoryTrait
      * @param PaginatedQueryBuilder $qb
      * @param array                 $criteria
      */
-    protected function processCriteria(PaginatedQueryBuilder $qb, array $criteria)
+    protected function processCriteria(PaginatedQueryBuilder $qb, array $criteria): void
     {
-        foreach ($criteria as $field => $value) {
-            $fieldParameter = 'f'.substr(md5($field), 0, 5);
+        if ($this instanceof FilterRepositoryInterface) {
+            $this->buildFilterCriteria($qb, $criteria);
+        } else {
+            foreach ($criteria as $field => $value) {
+                $fieldParameter = 'f'.substr(md5($field), 0, 5);
 
-            if (is_null($value)) {
-                $qb->andWhere(sprintf('%s.%s IS NULL', $this->getEntityAlias(), $field));
-            } elseif (is_array($value)) {
-                $qb->andWhere($qb->expr()->in(sprintf('%s.%s', $this->getEntityAlias(), $field), $value));
-            } else {
-                $qb->andWhere(sprintf('%s.%s = :%s', $this->getEntityAlias(), $field, $fieldParameter));
-                $qb->setParameter($fieldParameter, $value);
+                if (is_null($value)) {
+                    $qb->andWhere(sprintf('%s.%s IS NULL', $this->getEntityAlias(), $field));
+                } elseif (is_array($value)) {
+                    $qb->andWhere($qb->expr()->in(sprintf('%s.%s', $this->getEntityAlias(), $field), $value));
+                } else {
+                    $qb->andWhere(sprintf('%s.%s = :%s', $this->getEntityAlias(), $field, $fieldParameter));
+                    $qb->setParameter($fieldParameter, $value);
+                }
             }
         }
     }
@@ -83,7 +92,7 @@ trait PaginatedRepositoryTrait
      * @param PaginatedQueryBuilder $qb
      * @param array|null            $orderBy
      */
-    protected function processOrderBy(PaginatedQueryBuilder $qb, ?array $orderBy = null)
+    protected function processOrderBy(PaginatedQueryBuilder $qb, ?array $orderBy = null): void
     {
         if (is_array($orderBy)) {
             $qb->addOrder($orderBy, $this->getEntityAlias());

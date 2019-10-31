@@ -10,6 +10,7 @@ use Doctrine\ORM\EntityRepository;
 class PaginatedRepository extends EntityRepository implements PaginatedRepositoryInterface
 {
     use PaginatedRepositoryTrait;
+    use FilterRepositoryTrait;
 
     /**
      * {@inheritdoc}
