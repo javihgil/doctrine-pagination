@@ -35,8 +35,15 @@ trait FilterRepositoryTrait
                 break;
 
             case 'in':
-            case (is_array($value)):
                 $qb->andWhere($qb->expr()->in(sprintf('%s.%s', $this->getEntityAlias(), $fieldName), $value));
+                return;
+
+            case 'lt':
+            case 'lte':
+            case 'gt':
+            case 'gte':
+                $value = $value instanceof \DateTime ? "'".$value->format('Y-m-d')."'" : $value;
+                $qb->andWhere($qb->expr()->$operatorName(sprintf('%s.%s', $this->getEntityAlias(), $fieldName), $value));
                 return;
 
             case 'null':
@@ -45,10 +52,6 @@ trait FilterRepositoryTrait
                 } else {
                     $qb->andWhere(sprintf('%s.%s IS NOT NULL', $this->getEntityAlias(), $field));
                 }
-                return;
-
-            case (is_null($value)):
-                $qb->andWhere(sprintf('%s.%s IS NULL', $this->getEntityAlias(), $field));
                 return;
 
             default:
