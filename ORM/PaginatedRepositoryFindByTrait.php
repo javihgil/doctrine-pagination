@@ -6,8 +6,6 @@ trait PaginatedRepositoryFindByTrait
 {
     /**
      * {@inheritdoc}
-     *
-     * @deprecated this method will be removed in this repository
      */
     public function findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
     {
