@@ -1,7 +1,9 @@
+
 [![Latest Stable Version](https://poser.pugx.org/javihgil/doctrine-pagination/v/stable.svg)](https://packagist.org/packages/javihgil/doctrine-pagination)
 [![Latest Unstable Version](https://poser.pugx.org/javihgil/doctrine-pagination/v/unstable.svg)](https://packagist.org/packages/javihgil/doctrine-pagination)
 [![License](https://poser.pugx.org/javihgil/doctrine-pagination/license.svg)](https://packagist.org/packages/javihgil/doctrine-pagination)
 [![Total Downloads](https://poser.pugx.org/javihgil/doctrine-pagination/downloads)](https://packagist.org/packages/javihgil/doctrine-pagination)
+[![Build status](https://travis-ci.com/javihgil/doctrine-pagination.svg?branch=master)](https://travis-ci.com/javihgil/doctrine-pagination)
 
 This library provides a paginated repository and collection for Doctrine.
 
