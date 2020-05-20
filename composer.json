@@ -6,6 +6,14 @@
     "autoload": {
         "psr-4": {
             "Jhg\\DoctrinePagination\\": ""
+        },
+        "exclude-from-classmap": [
+            "/Tests/"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Jhg\\DoctrinePagination\\Tests\\": "Tests/"
         }
     },
     "require-dev": {
