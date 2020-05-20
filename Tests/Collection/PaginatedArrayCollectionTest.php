@@ -3,12 +3,12 @@
 namespace Jhg\DoctrinePagination\Tests\Collection;
 
 use Jhg\DoctrinePagination\Collection\PaginatedArrayCollection;
-use \Mockery as m;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class PaginatedArrayCollectionTest
  */
-class PaginatedArrayCollectionTest extends \PHPUnit_Framework_TestCase
+class PaginatedArrayCollectionTest extends TestCase
 {
     /**
      * @return array
@@ -44,5 +44,7 @@ class PaginatedArrayCollectionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($pagesExpected, $collection->getPages());
         $this->assertEquals($nextPageExpected, $collection->getNextPage());
         $this->assertEquals($prevPageExpected, $collection->getPrevPage());
+        $this->assertEquals($total ? 1 : null, $collection->getFirstPage());
+        $this->assertEquals($pagesExpected, $collection->getLastPage());
     }
 }
