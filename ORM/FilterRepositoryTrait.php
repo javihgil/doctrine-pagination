@@ -48,13 +48,14 @@ trait FilterRepositoryTrait
 
             case 'null':
                 if ($value) {
-                    $qb->andWhere(sprintf('%s.%s IS NULL', $this->getEntityAlias(), $field));
+                    $qb->andWhere(sprintf('%s.%s IS NULL', $this->getEntityAlias(), $fieldName));
                 } else {
-                    $qb->andWhere(sprintf('%s.%s IS NOT NULL', $this->getEntityAlias(), $field));
+                    $qb->andWhere(sprintf('%s.%s IS NOT NULL', $this->getEntityAlias(), $fieldName));
                 }
                 return;
 
             default:
+                $fieldName = $field;
                 $operator = '=';
         }
 
