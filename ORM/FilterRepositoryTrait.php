@@ -35,7 +35,7 @@ trait FilterRepositoryTrait
                 break;
 
             case 'in':
-                $qb->andWhere($qb->expr()->in(sprintf('%s.%s', $this->getEntityAlias(), $fieldName), $value));
+                $qb->andWhere($qb->expr()->in(sprintf('%s.%s', $this->getEntityAlias(), $fieldName), is_array($value) ? $value : [$value]));
                 return;
 
             case 'lt':
