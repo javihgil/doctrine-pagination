@@ -2,7 +2,7 @@
 
 namespace Jhg\DoctrinePagination\ORM;
 
-use Doctrine\Common\Persistence\ObjectRepository;
+use Doctrine\Persistence\ObjectRepository;
 use Doctrine\ORM\AbstractQuery;
 use Jhg\DoctrinePagination\Collection\PaginatedArrayCollection;
 
