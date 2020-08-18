@@ -30,8 +30,12 @@ trait PaginatedRepositoryTrait
 
         $results = $qb->getQuery()->getResult($hydrateMode);
 
-        // find all
-        $total = ($rpp > 0) ? $this->countBy($criteria) : -1;
+        // count elements if needed
+        if ($rpp > 0) {
+            $total = count($results) < $rpp && $page == 1 ? count($results) : $this->countBy($criteria);
+        } else {
+            $total = -1;
+        }
 
         return new PaginatedArrayCollection($results, $page, $rpp, $total);
     }
