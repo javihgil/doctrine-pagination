@@ -4,142 +4,87 @@ namespace KaduDutra\DoctrinePagination\Collection;
 
 use Doctrine\Common\Collections\ArrayCollection;
 
-/**
- * Class PaginatedArrayCollection
- */
 class PaginatedArrayCollection extends ArrayCollection
 {
-    /**
-     * @var int
-     */
-    protected $page;
+    protected ?int $total;
 
-    /**
-     * @var int
-     */
-    protected $rpp;
+    protected ?int $last_page;
 
-    /**
-     * @var int
-     */
-    protected $total;
+    protected ?int $per_page;
 
-    /**
-     * @param array $elements
-     * @param null  $page
-     * @param int   $rpp
-     * @param null  $total
-     */
-    public function __construct(array $elements = [], $page = null, $rpp = 10, $total = null)
+    protected ?int $current_page;
+
+    protected ?string $next_page_url;
+
+    protected ?string $prev_page_url;
+
+    public function __construct(array $elements = [], int $current_page = null, int $per_page = 10, int $total = null)
     {
-        $this->page = $page;
-        $this->rpp = $rpp;
         $this->total = $total;
+        $this->per_page = $per_page;
+        $this->current_page = $current_page;
+
+        $this->last_page = $this->getLastPage();
+        $this->next_page_url = $this->getNextPageUrl();
+        $this->prev_page_url = $this->getPrevPageUrl();
 
         parent::__construct($elements);
     }
 
-    /**
-     * @return int
-     */
-    public function getPage()
-    {
-        return $this->page;
-    }
-
-    /**
-     * @return int
-     */
-    public function getRpp()
-    {
-        return $this->rpp;
-    }
-
-    /**
-     * @return int
-     */
-    public function getTotal()
+    public function getTotal(): ?int
     {
         return $this->total;
     }
 
-    /**
-     * @return int|0
-     */
-    public function getPages()
+    public function getLastPage(): ?int
     {
-        if (!$this->getRpp()) {
-            throw new \LogicException('Rpp was not setted');
+        if (!$this->getPerPage()) {
+            throw new \LogicException('ResultsPerPage was not setted');
         }
 
         if (!$this->getTotal()) {
             return 0;
         }
 
-        return ceil($this->total / $this->rpp);
+        $this->last_page = ceil($this->getTotal() / $this->getPerPage());
+
+        return $this->last_page;
     }
 
-    /**
-     * @return int
-     */
-    public function getFirstPage()
+    public function getPerPage(): ?int
     {
-        if (0 == $this->getPages()) {
-            return null;
+        return $this->per_page;
+    }
+
+    public function getCurrentPage(): ?int
+    {
+        return $this->current_page;
+    }
+
+    public function getNextPageUrl(): ?string
+    {
+        $this->next_page_url = $this->mountUrl($this->getCurrentPage() + 1);
+
+        return $this->next_page_url;
+    }
+
+    public function getPrevPageUrl(): ?string
+    {
+        $this->prev_page_url = $this->mountUrl($this->getCurrentPage() - 1);
+
+        return $this->prev_page_url;
+    }
+
+    private function mountUrl(int $page): string
+    {
+        if ($page < 1) {
+            $page = 1;
         }
 
-        return 1;
-    }
-
-    /**
-     * @return int
-     */
-    public function getLastPage()
-    {
-        if (0 == $this->getPages()) {
-            return null;
+        if ($page > $this->getTotal()) {
+            $page = $this->getTotal();
         }
 
-        return $this->getPages();
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getNextPage()
-    {
-        if (!$this->isLastPage()) {
-            return $this->getPage() + 1;
-        }
-
-        return null;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getPrevPage()
-    {
-        if (!$this->isFirstPage()) {
-            return $this->getPage() - 1;
-        }
-
-        return null;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isFirstPage()
-    {
-        return $this->getPage() == 1;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isLastPage()
-    {
-        return !$this->getPages() || $this->getPage() == $this->getPages();
+        return sprintf("?page=%s&per_page=%s", $page, $this->getPerPage());
     }
 }

@@ -81,9 +81,6 @@ class Task
 If needed, override processCriteria method in your custom repository to add some custom actions:
 
 ```php
-/**
- * {@inheritdoc}
- */
 protected function processCriteria(PaginatedQueryBuilder $qb, array $criteria)
 {
     foreach ($criteria as $field => $value) {
@@ -101,7 +98,7 @@ protected function processCriteria(PaginatedQueryBuilder $qb, array $criteria)
 
 # Using Paginated Repository
 
-*public* **findPageBy** *($page, $rpp, array $criteria = [], array $orderBy = null)*
+*public* **findPageBy** *($page, $per_page, array $criteria = [], array $orderBy = null)*
 
 Returns a paginated collection of elements that matches criteria.
 
@@ -132,13 +129,13 @@ The PaginatedRepository always returns a PaginatedArrayCollection:
 ```php
 // some parameters
 $page = 5;
-$resultsPerPage = 10;
+$per_page = 10;
 
 // get repository
 $repository = $doctrine->getRepository('Task');
 
 /** @var PaginatedArrayCollection */
-$result = $repository->findPageBy($page, $resultsPerPage, ['field'=>'value']);
+$result = $repository->findPageBy($page, $per_page, ['field'=>'value']);
 ```
 
 **count()**
@@ -162,11 +159,11 @@ $totalResults = $result->getTotal(); // 95
 $currentPage = $result->getPage(); // 5
 ```
 
-**getRpp()**
+**getResultsPerPage()**
 
 ```php
 // current results per page
-$currentResultsPerPage = $result->getRpp(); // 10
+$currentResultsPerPage = $result->getResultsPerPage(); // 10
 ```
 
 **getPages()**

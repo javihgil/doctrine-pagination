@@ -29,18 +29,18 @@ class PaginatedArrayCollectionTest extends TestCase
      *
      * @param array $elements
      * @param int   $page
-     * @param int   $rpp
+     * @param int   $per_page
      * @param int   $total
      * @param int   $pagesExpected
      * @param int   $nextPageExpected
      * @param int   $prevPageExpected
      */
-    public function testCollection($elements, $page, $rpp, $total, $pagesExpected, $nextPageExpected, $prevPageExpected)
+    public function testCollection($elements, $page, $per_page, $total, $pagesExpected, $nextPageExpected, $prevPageExpected)
     {
-        $collection = new PaginatedArrayCollection($elements, $page, $rpp, $total);
+        $collection = new PaginatedArrayCollection($elements, $page, $per_page, $total);
 
         $this->assertEquals($page, $collection->getPage());
-        $this->assertEquals($rpp, $collection->getRpp());
+        $this->assertEquals($per_page, $collection->getResultsPerPage());
         $this->assertEquals($pagesExpected, $collection->getPages());
         $this->assertEquals($nextPageExpected, $collection->getNextPage());
         $this->assertEquals($prevPageExpected, $collection->getPrevPage());
