@@ -4,87 +4,75 @@ namespace KaduDutra\DoctrinePagination\ORM;
 
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use KaduDutra\DoctrinePagination\Collection\PaginatedArrayCollection;
 
 trait PaginatedRepositoryTrait
 {
-    /**
-     * @param int        $page
-     * @param int        $rpp
-     * @param array      $criteria
-     * @param array|null $orderBy
-     * @param int        $hydrateMode
-     *
-     * @return PaginatedArrayCollection
-     */
-    public function findPageBy(int $page, int $rpp, array $criteria = [], array $orderBy = null, $hydrateMode = AbstractQuery::HYDRATE_OBJECT): PaginatedArrayCollection
+    public function findPageBy(
+        int $page,
+        int $resultsPerPage,
+        ?array $criteria = [],
+        ?array $orderBy = null,
+        ?int $hydrateMode = AbstractQuery::HYDRATE_OBJECT
+    ): PaginatedArrayCollection
     {
         $qb = $this->createPaginatedQueryBuilder($criteria, null, $orderBy);
         $qb->addSelect($this->getEntityAlias());
         $this->processOrderBy($qb, $orderBy);
 
         // find all
-        if ($rpp > 0) {
-            $qb->addPagination($page, $rpp);
+        if ($resultsPerPage > 0) {
+            $qb->addPagination($page, $resultsPerPage);
         }
 
         $results = $qb->getQuery()->getResult($hydrateMode);
 
         // count elements if needed
-        if ($rpp > 0) {
-            $total = count($results) < $rpp && $page == 1 ? count($results) : $this->countBy($criteria);
+        if ($resultsPerPage > 0) {
+            $total = count($results) < $resultsPerPage && $page == 1 ? count($results) : $this->countBy($criteria);
         } else {
             $total = -1;
         }
 
-        return new PaginatedArrayCollection($results, $page, $rpp, $total);
+        return new PaginatedArrayCollection($results, $page, $resultsPerPage, $total);
     }
 
-    /**
-     * @param array $criteria
-     *
-     * @return int
-     */
-    public function countBy(array $criteria = []): int
+    public function countBy(?array $criteria = []): int
     {
         try {
             $qb = $this->createPaginatedQueryBuilder($criteria);
             $qb->select('COUNT(' . $this->getEntityAlias() . ')');
 
             return (int)$qb->getQuery()->getSingleScalarResult();
-        } catch (NonUniqueResultException $e) {
+        } catch (NonUniqueResultException | NoResultException $e) {
             return 0;
         }
     }
 
-    /**
-     * @param array       $criteria
-     * @param string|null $indexBy
-     * @param array|null  $orderBy
-     *
-     * @return PaginatedQueryBuilder
-     */
-    protected function createPaginatedQueryBuilder(array $criteria = [], ?string $indexBy = null, ?array $orderBy = null): PaginatedQueryBuilder
+    protected function createPaginatedQueryBuilder(
+        array $criteria = [], ?string $indexBy = null, ?array $orderBy = null
+    ): PaginatedQueryBuilder
     {
         $qb = new PaginatedQueryBuilder($this->_em);
         $qb->from($this->_entityName, $this->getEntityAlias(), $indexBy);
+
+        if (!empty($orderBy)) {
+            $qb->addOrder($orderBy, $this->getEntityAlias());
+        }
 
         $this->processCriteria($qb, $criteria);
 
         return $qb;
     }
 
-    /**
-     * @param PaginatedQueryBuilder $qb
-     * @param array                 $criteria
-     */
     protected function processCriteria(PaginatedQueryBuilder $qb, array $criteria): void
     {
         if ($this instanceof FilterRepositoryInterface) {
             $this->buildFilterCriteria($qb, $criteria);
         } else {
             foreach ($criteria as $field => $value) {
-                $fieldParameter = 'f'.substr(md5($field), 0, 5);
+                $fieldParameter = 'f' . substr(md5($field), 0, 5);
 
                 if (is_null($value)) {
                     $qb->andWhere(sprintf('%s.%s IS NULL', $this->getEntityAlias(), $field));
@@ -98,10 +86,6 @@ trait PaginatedRepositoryTrait
         }
     }
 
-    /**
-     * @param PaginatedQueryBuilder $qb
-     * @param array|null            $orderBy
-     */
     protected function processOrderBy(PaginatedQueryBuilder $qb, ?array $orderBy = null): void
     {
         if (is_array($orderBy)) {
@@ -109,9 +93,6 @@ trait PaginatedRepositoryTrait
         }
     }
 
-    /**
-     * @return string
-     */
     protected function getEntityAlias(): string
     {
         $entityName = explode('\\', $this->_entityName);

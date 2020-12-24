@@ -2,15 +2,16 @@
 
 namespace KaduDutra\DoctrinePagination\ORM;
 
+use KaduDutra\DoctrinePagination\Collection\PaginatedArrayCollection;
+
 trait PaginatedRepositoryFindByTrait
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+    public function findByPaginate(
+        ?array $criteria = [], ?array $orderBy = null, ?int $limit = null, ?int $offset = null
+    ): PaginatedArrayCollection
     {
         if ($offset !== null && $limit !== null && $limit > 0) {
-            $page = ceil($offset/$limit) + 1;
+            $page = ceil($offset / $limit) + 1;
         } else {
             $page = 1;
         }
