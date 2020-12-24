@@ -1,8 +1,8 @@
 <?php
 
-namespace Jhg\DoctrinePagination\Tests\ORM\Helper;
+namespace KaduDutra\DoctrinePagination\Tests\ORM\Helper;
 
-use Jhg\DoctrinePagination\ORM\FilterRepositoryTrait;
+use KaduDutra\DoctrinePagination\ORM\FilterRepositoryTrait;
 
 class FilteredRepositoryExample
 {

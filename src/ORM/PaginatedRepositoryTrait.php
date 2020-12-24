@@ -1,10 +1,10 @@
 <?php
 
-namespace Jhg\DoctrinePagination\ORM;
+namespace KaduDutra\DoctrinePagination\ORM;
 
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\NonUniqueResultException;
-use Jhg\DoctrinePagination\Collection\PaginatedArrayCollection;
+use KaduDutra\DoctrinePagination\Collection\PaginatedArrayCollection;
 
 trait PaginatedRepositoryTrait
 {

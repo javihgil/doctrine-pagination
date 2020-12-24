@@ -1,6 +1,6 @@
 <?php
 
-namespace Jhg\DoctrinePagination\Collection;
+namespace KaduDutra\DoctrinePagination\Collection;
 
 use Doctrine\Common\Collections\ArrayCollection;
 

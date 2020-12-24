@@ -1,9 +1,9 @@
 
-[![Latest Stable Version](https://poser.pugx.org/javihgil/doctrine-pagination/v/stable.svg)](https://packagist.org/packages/javihgil/doctrine-pagination)
-[![Latest Unstable Version](https://poser.pugx.org/javihgil/doctrine-pagination/v/unstable.svg)](https://packagist.org/packages/javihgil/doctrine-pagination)
-[![License](https://poser.pugx.org/javihgil/doctrine-pagination/license.svg)](https://packagist.org/packages/javihgil/doctrine-pagination)
-[![Total Downloads](https://poser.pugx.org/javihgil/doctrine-pagination/downloads)](https://packagist.org/packages/javihgil/doctrine-pagination)
-[![Build status](https://travis-ci.com/javihgil/doctrine-pagination.svg?branch=master)](https://travis-ci.com/javihgil/doctrine-pagination)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%5E7.4-blue)](https://php.net/)
+[![Latest Stable Version](https://poser.pugx.org/kadudutra/doctrine-pagination/v/stable.svg)](https://packagist.org/packages/kadudutra/doctrine-pagination)
+[![Latest Unstable Version](https://poser.pugx.org/kadudutra/doctrine-pagination/v/unstable.svg)](https://packagist.org/packages/kadudutra/doctrine-pagination)
+[![License](https://poser.pugx.org/kadudutra/doctrine-pagination/license.svg)](https://packagist.org/packages/kadudutra/doctrine-pagination)
+[![Total Downloads](https://poser.pugx.org/kadudutra/doctrine-pagination/downloads)](https://packagist.org/packages/kadudutra/doctrine-pagination)
 
 This library provides a paginated repository and collection for Doctrine.
 
@@ -14,7 +14,7 @@ This library provides a paginated repository and collection for Doctrine.
 Open a command console, enter your project directory and execute:
 
 ```console
-$ composer require javihgil/doctrine-pagination:^1.1@dev
+$ composer require kadudutra/doctrine-pagination
 ```
 
 # Configure Repository
@@ -32,7 +32,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Class Task
  *
  * @ORM\Table(name="task")
- * @ORM\Entity(repositoryClass="Jhg\DoctrinePagination\ORM\PaginatedRepository")
+ * @ORM\Entity(repositoryClass="KaduDutra\DoctrinePagination\ORM\PaginatedRepository")
  */
 class Task
 {
@@ -47,8 +47,8 @@ Create custom repository extending PaginatedRepository:
 ```php
 namespace Repository;
 
-use Jhg\DoctrinePagination\ORM\PaginatedQueryBuilder;
-use Jhg\DoctrinePagination\ORM\PaginatedRepository;
+use KaduDutra\DoctrinePagination\ORM\PaginatedQueryBuilder;
+use KaduDutra\DoctrinePagination\ORM\PaginatedRepository;
 
 /**
  * Class TaskRepository

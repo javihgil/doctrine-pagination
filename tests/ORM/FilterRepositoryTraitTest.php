@@ -1,12 +1,12 @@
 <?php
 
-namespace Jhg\DoctrinePagination\Tests\ORM;
+namespace KaduDutra\DoctrinePagination\Tests\ORM;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr;
 use Doctrine\ORM\Query\Parameter;
-use Jhg\DoctrinePagination\ORM\PaginatedQueryBuilder;
-use Jhg\DoctrinePagination\Tests\ORM\Helper\FilteredRepositoryExample;
+use KaduDutra\DoctrinePagination\ORM\PaginatedQueryBuilder;
+use KaduDutra\DoctrinePagination\Tests\ORM\Helper\FilteredRepositoryExample;
 use PHPUnit\Framework\TestCase;
 
 class FilterRepositoryTraitTest extends TestCase
