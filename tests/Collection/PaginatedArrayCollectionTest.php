@@ -1,8 +1,8 @@
 <?php
 
-namespace Jhg\DoctrinePagination\Tests\Collection;
+namespace KaduDutra\DoctrinePagination\Tests\Collection;
 
-use Jhg\DoctrinePagination\Collection\PaginatedArrayCollection;
+use KaduDutra\DoctrinePagination\Collection\PaginatedArrayCollection;
 use PHPUnit\Framework\TestCase;
 
 /**

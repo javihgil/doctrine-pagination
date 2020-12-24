@@ -1,6 +1,6 @@
 <?php
 
-namespace Jhg\DoctrinePagination\ORM;
+namespace KaduDutra\DoctrinePagination\ORM;
 
 use Doctrine\ORM\EntityRepository;
 

@@ -1,19 +1,16 @@
 {
-    "name": "javihgil/doctrine-pagination",
+    "name": "kadudutra/doctrine-pagination",
     "description": "Doctrine pagination",
     "type": "library",
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Jhg\\DoctrinePagination\\": ""
-        },
-        "exclude-from-classmap": [
-            "/Tests/"
-        ]
+            "KaduDutra\\DoctrinePagination\\": "src/"
+        }
     },
     "autoload-dev": {
         "psr-4": {
-            "Jhg\\DoctrinePagination\\Tests\\": "Tests/"
+            "KaduDutra\\DoctrinePagination\\tests\\": "tests/"
         }
     },
     "require-dev": {
@@ -27,10 +24,5 @@
         "test": [
             "vendor/bin/phpunit"
         ]
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "1.1-dev"
-        }
     }
 }
