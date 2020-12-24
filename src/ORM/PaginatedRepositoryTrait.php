@@ -11,7 +11,7 @@ trait PaginatedRepositoryTrait
 {
     public function findPageBy(
         int $page,
-        int $resultsPerPage,
+        int $per_page,
         ?array $criteria = [],
         ?array $orderBy = null,
         ?int $hydrateMode = AbstractQuery::HYDRATE_OBJECT
@@ -22,20 +22,19 @@ trait PaginatedRepositoryTrait
         $this->processOrderBy($qb, $orderBy);
 
         // find all
-        if ($resultsPerPage > 0) {
-            $qb->addPagination($page, $resultsPerPage);
+        if ($per_page > 0) {
+            $qb->addPagination($page, $per_page);
         }
 
         $results = $qb->getQuery()->getResult($hydrateMode);
 
         // count elements if needed
-        if ($resultsPerPage > 0) {
-            $total = count($results) < $resultsPerPage && $page == 1 ? count($results) : $this->countBy($criteria);
-        } else {
-            $total = -1;
+        $total = -1;
+        if ($per_page > 0) {
+            $total = count($results) < $per_page && $page == 1 ? count($results) : $this->countBy($criteria);
         }
 
-        return new PaginatedArrayCollection($results, $page, $resultsPerPage, $total);
+        return new PaginatedArrayCollection($results, $page, $per_page, $total);
     }
 
     public function countBy(?array $criteria = []): int

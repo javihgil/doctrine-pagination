@@ -6,39 +6,39 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 class PaginatedArrayCollection extends ArrayCollection
 {
-    protected ?int $page;
-
-    protected ?int $resultsPerPage;
-
     protected ?int $total;
 
-    public function __construct(array $elements = [], int $page = null, int $resultsPerPage = 10, int $total = null)
+    protected ?int $last_page;
+
+    protected ?int $per_page;
+
+    protected ?int $current_page;
+
+    protected ?string $next_page_url;
+
+    protected ?string $prev_page_url;
+
+    public function __construct(array $elements = [], int $current_page = null, int $per_page = 10, int $total = null)
     {
-        $this->resultsPerPage = $resultsPerPage;
         $this->total = $total;
-        $this->page = $page;
+        $this->per_page = $per_page;
+        $this->current_page = $current_page;
+
+        $this->last_page = $this->getLastPage();
+        $this->next_page_url = $this->getNextPageUrl();
+        $this->prev_page_url = $this->getPrevPageUrl();
 
         parent::__construct($elements);
     }
 
-    public function getPage(): int
-    {
-        return $this->page;
-    }
-
-    public function getResultsPerPage(): int
-    {
-        return $this->resultsPerPage;
-    }
-
-    public function getTotal(): int
+    public function getTotal(): ?int
     {
         return $this->total;
     }
 
-    public function getPages(): int
+    public function getLastPage(): ?int
     {
-        if (!$this->getResultsPerPage()) {
+        if (!$this->getPerPage()) {
             throw new \LogicException('ResultsPerPage was not setted');
         }
 
@@ -46,52 +46,45 @@ class PaginatedArrayCollection extends ArrayCollection
             return 0;
         }
 
-        return ceil($this->total / $this->resultsPerPage);
+        $this->last_page = ceil($this->getTotal() / $this->getPerPage());
+
+        return $this->last_page;
     }
 
-    public function getFirstPage(): ?int
+    public function getPerPage(): ?int
     {
-        if (0 == $this->getPages()) {
-            return null;
+        return $this->per_page;
+    }
+
+    public function getCurrentPage(): ?int
+    {
+        return $this->current_page;
+    }
+
+    public function getNextPageUrl(): ?string
+    {
+        $this->next_page_url = $this->mountUrl($this->getCurrentPage() + 1);
+
+        return $this->next_page_url;
+    }
+
+    public function getPrevPageUrl(): ?string
+    {
+        $this->prev_page_url = $this->mountUrl($this->getCurrentPage() - 1);
+
+        return $this->prev_page_url;
+    }
+
+    private function mountUrl(int $page): string
+    {
+        if ($page < 1) {
+            $page = 1;
         }
 
-        return 1;
-    }
-
-    public function getLastPage(): ?int
-    {
-        if (0 == $this->getPages()) {
-            return null;
+        if ($page > $this->getTotal()) {
+            $page = $this->getTotal();
         }
 
-        return $this->getPages();
-    }
-
-    public function getNextPage(): ?int
-    {
-        if (!$this->isLastPage()) {
-            return $this->getPage() + 1;
-        }
-
-        return null;
-    }
-
-    public function getPrevPage(): ?int
-    {
-        if (!$this->isFirstPage()) {
-            return $this->getPage() - 1;
-        }
-
-        return null;
-    }
-
-    public function isFirstPage(): bool
-    {
-        return $this->getPage() == 1;
-    }
-
-    public function isLastPage(): bool
-    {
-        return !$this->getPages() || $this->getPage() == $this->getPages();
+        return sprintf("?page=%s&per_page=%s", $page, $this->getPerPage());
     }
 }

@@ -9,7 +9,7 @@ use KaduDutra\DoctrinePagination\Collection\PaginatedArrayCollection;
 interface PaginatedRepositoryInterface extends ObjectRepository
 {
     public function findPageBy(
-        int $page, int $resultsPerPage, array $criteria = [], ?array $orderBy = null, ?int $hydrateMode = AbstractQuery::HYDRATE_OBJECT
+        int $page, int $per_page, array $criteria = [], ?array $orderBy = null, ?int $hydrateMode = AbstractQuery::HYDRATE_OBJECT
     ): PaginatedArrayCollection;
 
     public function countBy(array $criteria = []): int;

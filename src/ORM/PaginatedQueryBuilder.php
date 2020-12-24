@@ -19,10 +19,10 @@ class PaginatedQueryBuilder extends QueryBuilder
         return $this;
     }
 
-    public function addPagination(int $page, int $resultsPerPage): PaginatedQueryBuilder
+    public function addPagination(int $page, int $per_page): PaginatedQueryBuilder
     {
-        $offset = ($page - 1) * $resultsPerPage;
-        $limit = $resultsPerPage;
+        $offset = ($page - 1) * $per_page;
+        $limit = $per_page;
 
         $this->setFirstResult($offset);
         $this->setMaxResults($limit);
