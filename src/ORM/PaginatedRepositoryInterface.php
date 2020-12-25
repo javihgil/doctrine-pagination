@@ -1,10 +1,10 @@
 <?php
 
-namespace KaduDutra\DoctrinePagination\ORM;
+namespace DoctrinePagination\ORM;
 
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\Persistence\ObjectRepository;
-use KaduDutra\DoctrinePagination\Collection\PaginatedArrayCollection;
+use DoctrinePagination\Collection\PaginatedArrayCollection;
 
 interface PaginatedRepositoryInterface extends ObjectRepository
 {

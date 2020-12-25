@@ -1,6 +1,6 @@
 <?php
 
-namespace KaduDutra\DoctrinePagination\ORM;
+namespace DoctrinePagination\ORM;
 
 use Doctrine\ORM\QueryBuilder;
 

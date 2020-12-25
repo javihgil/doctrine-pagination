@@ -1,10 +1,10 @@
 <?php
 
-namespace KaduDutra\DoctrinePagination\Tests\ORM;
+namespace DoctrinePagination\tests\ORM;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr;
-use KaduDutra\DoctrinePagination\ORM\PaginatedQueryBuilder;
+use DoctrinePagination\ORM\PaginatedQueryBuilder;
 use PHPUnit\Framework\TestCase;
 
 class PaginatedQueryBuilderTest extends TestCase

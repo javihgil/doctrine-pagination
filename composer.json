@@ -5,12 +5,12 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "KaduDutra\\DoctrinePagination\\": "src/"
+            "DoctrinePagination\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "KaduDutra\\DoctrinePagination\\tests\\": "tests/"
+            "DoctrinePagination\\tests\\": "tests/"
         }
     },
     "require-dev": {
