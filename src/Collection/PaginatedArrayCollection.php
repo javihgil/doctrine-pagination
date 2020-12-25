@@ -1,6 +1,6 @@
 <?php
 
-namespace KaduDutra\DoctrinePagination\Collection;
+namespace DoctrinePagination\Collection;
 
 use Doctrine\Common\Collections\ArrayCollection;
 

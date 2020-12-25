@@ -1,8 +1,8 @@
 <?php
 
-namespace KaduDutra\DoctrinePagination\ORM;
+namespace DoctrinePagination\ORM;
 
-use KaduDutra\DoctrinePagination\Collection\PaginatedArrayCollection;
+use DoctrinePagination\Collection\PaginatedArrayCollection;
 
 trait PaginatedRepositoryFindByTrait
 {

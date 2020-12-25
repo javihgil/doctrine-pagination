@@ -32,7 +32,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Class Task
  *
  * @ORM\Table(name="task")
- * @ORM\Entity(repositoryClass="KaduDutra\DoctrinePagination\ORM\PaginatedRepository")
+ * @ORM\Entity(repositoryClass="DoctrinePagination\ORM\PaginatedRepository")
  */
 class Task
 {
@@ -47,8 +47,8 @@ Create custom repository extending PaginatedRepository:
 ```php
 namespace Repository;
 
-use KaduDutra\DoctrinePagination\ORM\PaginatedQueryBuilder;
-use KaduDutra\DoctrinePagination\ORM\PaginatedRepository;
+use DoctrinePagination\ORM\PaginatedQueryBuilder;
+use DoctrinePagination\ORM\PaginatedRepository;
 
 /**
  * Class TaskRepository

@@ -1,8 +1,8 @@
 <?php
 
-namespace KaduDutra\DoctrinePagination\Tests\ORM\Helper;
+namespace DoctrinePagination\tests\ORM\Helper;
 
-use KaduDutra\DoctrinePagination\ORM\FilterRepositoryTrait;
+use DoctrinePagination\ORM\FilterRepositoryTrait;
 
 class FilteredRepositoryExample
 {
