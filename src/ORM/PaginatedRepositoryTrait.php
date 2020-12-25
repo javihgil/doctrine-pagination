@@ -10,8 +10,8 @@ use KaduDutra\DoctrinePagination\Collection\PaginatedArrayCollection;
 trait PaginatedRepositoryTrait
 {
     public function findPageBy(
-        int $page = 1,
-        int $per_page = 20,
+        ?int $page = 1,
+        ?int $per_page = 20,
         ?array $criteria = [],
         ?array $orderBy = null,
         ?int $hydrateMode = AbstractQuery::HYDRATE_OBJECT
