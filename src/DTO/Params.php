@@ -12,9 +12,10 @@ class Params
     private ?int $per_page = 20;
     private ?array $criteria = [];
     private ?string $sort = '';
-    private ?int $hydrateMode = AbstractQuery::HYDRATE_OBJECT;
+    private ?string $order = 'ASC';
     private ?string $search = '';
     private ?string $search_field = '';
+    private ?int $hydrateMode = AbstractQuery::HYDRATE_OBJECT;
 
     public function __construct(?array $dados = [])
     {
@@ -83,15 +84,24 @@ class Params
         return $this;
     }
 
-    public function getHydrateMode(): ?int
+    public function getOrder(): ?string
     {
-        return $this->hydrateMode;
+        return $this->order;
     }
 
-    public function setHydrateMode(?int $hydrateMode): Params
+    public function setOrder(?string $order): Params
     {
-        $this->hydrateMode = $hydrateMode;
+        $this->order = $order;
         return $this;
+    }
+
+    public function getOrderBy(): array
+    {
+        if ($this->getSort() && $this->getOrder()) {
+            return [$this->getSort() => $this->getOrder()];
+        }
+
+        return [];
     }
 
     public function getSearch(): ?string
@@ -113,6 +123,17 @@ class Params
     public function setSearchField(?string $search_field): Params
     {
         $this->search_field = $search_field;
+        return $this;
+    }
+
+    public function getHydrateMode(): ?int
+    {
+        return $this->hydrateMode;
+    }
+
+    public function setHydrateMode(?int $hydrateMode): Params
+    {
+        $this->hydrateMode = $hydrateMode;
         return $this;
     }
 

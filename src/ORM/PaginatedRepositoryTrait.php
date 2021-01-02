@@ -16,7 +16,7 @@ trait PaginatedRepositoryTrait
             $params->getPage(),
             $params->getPerPage(),
             $params->getCriteria(),
-            [$params->getSort() => "ASC"],
+            $params->getOrderBy(),
             $params->getHydrateMode()
         );
     }
