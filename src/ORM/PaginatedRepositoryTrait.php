@@ -6,9 +6,21 @@ use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use DoctrinePagination\Collection\PaginatedArrayCollection;
+use DoctrinePagination\DTO\Params;
 
 trait PaginatedRepositoryTrait
 {
+    public function findPageWithDTO(?Params $params): PaginatedArrayCollection
+    {
+        return $this->findPageBy(
+            $params->getPage(),
+            $params->getPerPage(),
+            $params->getCriteria(),
+            [$params->getSort() => "ASC"],
+            $params->getHydrateMode()
+        );
+    }
+
     public function findPageBy(
         ?int $page = 1,
         ?int $per_page = 20,
@@ -75,6 +87,8 @@ trait PaginatedRepositoryTrait
 
                 if (is_null($value)) {
                     $qb->andWhere(sprintf('%s.%s IS NULL', $this->getEntityAlias(), $field));
+                } elseif (is_array($value) && in_array(strtoupper($value[0]), ["LIKE", "ILIKE"])) {
+                    $qb->andWhere($qb->expr()->like(sprintf('%s.%s', $this->getEntityAlias(), $field), $qb->expr()->literal($value[1] . '%')));
                 } elseif (is_array($value)) {
                     $qb->andWhere($qb->expr()->in(sprintf('%s.%s', $this->getEntityAlias(), $field), $value));
                 } else {
