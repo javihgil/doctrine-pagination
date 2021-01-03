@@ -4,7 +4,7 @@ namespace DoctrinePagination\Collection;
 
 use Doctrine\Common\Collections\ArrayCollection;
 
-class PaginatedArrayCollection extends ArrayCollection
+class PaginatedArrayCollection
 {
     protected ?int $total;
 
@@ -22,6 +22,8 @@ class PaginatedArrayCollection extends ArrayCollection
 
     protected ?array $orderBy = [];
 
+    protected ?ArrayCollection $data = null;
+
     public function __construct(
         array $elements = [],
         int $current_page = null,
@@ -31,6 +33,8 @@ class PaginatedArrayCollection extends ArrayCollection
         ?array $orderBy = []
     )
     {
+        $this->data = new ArrayCollection($elements);
+
         $this->total = $total;
         $this->per_page = $per_page;
         $this->current_page = $current_page;
@@ -43,8 +47,6 @@ class PaginatedArrayCollection extends ArrayCollection
 
         $this->criteria = null;
         $this->orderBy = null;
-
-        parent::__construct($elements);
     }
 
     public function getTotal(): ?int
