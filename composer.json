@@ -20,8 +20,8 @@
         "phpunit/phpunit": "^9.1"
     },
     "require": {
-        "php": "^7.1",
-        "doctrine/orm": "~2.5"
+        "php": "^7.3",
+        "doctrine/orm": "~2.8"
     },
     "scripts": {
         "test": [
