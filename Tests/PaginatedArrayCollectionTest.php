@@ -18,7 +18,7 @@ class PaginatedArrayCollectionTest extends \PHPUnit_Framework_TestCase
         return [
             [[], 1, 10, 100, 10, 2, null],
             [[], 10, 10, 100, 10, null, 9],
-            [[], 1, 10, 0, 0, null, null],
+            [[], 1, 10, 0, 0, 2, null],
             [[], 2, 1, 2, 2, null, 1],
             [[], 1, 1, 2, 2, 2, null],
         ];
