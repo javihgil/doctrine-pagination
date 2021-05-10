@@ -38,6 +38,14 @@ trait FilterRepositoryTrait
                 $qb->andWhere($qb->expr()->in(sprintf('%s.%s', $this->getEntityAlias(), $fieldName), is_array($value) ? $value : [$value]));
                 return;
 
+            case 'between':
+                $value0 = $value[0];
+                $value1 = $value[1];
+                $value0 = $value0 instanceof \DateTime ? "'".$value0->format('Y-m-d')."'" : $value0;
+                $value1 = $value1 instanceof \DateTime ? "'".$value1->format('Y-m-d')."'" : $value1;
+                $qb->andWhere($qb->expr()->between(sprintf('%s.%s', $this->getEntityAlias(), $fieldName), $value0, $value1));
+                return;
+
             case 'lt':
             case 'lte':
             case 'gt':
