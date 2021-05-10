@@ -7,7 +7,7 @@ use Doctrine\ORM\EntityRepository;
 /**
  * Class PaginatedRepository
  */
-class PaginatedRepository extends EntityRepository implements PaginatedRepositoryInterface
+class PaginatedRepository extends EntityRepository implements PaginatedRepositoryInterface, FilterRepositoryInterface
 {
     use PaginatedRepositoryTrait;
     use PaginatedRepositoryFindByTrait;
