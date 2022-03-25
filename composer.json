@@ -5,7 +5,7 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Jhg\\DoctrinePagination\\": ""
+            "Jhg\\DoctrinePagination\\": "src/"
         },
         "exclude-from-classmap": [
             "/Tests/"
@@ -13,7 +13,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Jhg\\DoctrinePagination\\Tests\\": "Tests/"
+            "Jhg\\DoctrinePagination\\Tests\\": "tests/"
         }
     },
     "require-dev": {
