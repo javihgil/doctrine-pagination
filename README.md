@@ -16,6 +16,10 @@ This library provides a paginated repository and collection for Doctrine.
 * [3. Using paginated collections](docs/4_using_paginated_collections.md)
 * [5. Filter trait](#todo)
 
+## Symfony integration
+
+You can integrate with Symfony projects using [javihgil/doctrine-pagination-bundle](https://github.com/javihgil/doctrine-pagination-bundle).
+
 ## License
 
 This bundle is under the MIT license. See the complete license in the bundle LICENSE file.
