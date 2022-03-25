@@ -2,6 +2,9 @@
 
 namespace Jhg\DoctrinePagination\ORM;
 
+/**
+ * @deprecated
+ */
 trait PaginatedRepositoryFindByTrait
 {
     public function findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
