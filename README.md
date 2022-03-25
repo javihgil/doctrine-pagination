@@ -3,6 +3,7 @@
 [![Latest Stable Version](https://poser.pugx.org/javihgil/doctrine-pagination/v/stable.svg)](https://packagist.org/packages/javihgil/doctrine-pagination)
 [![Latest Unstable Version](https://poser.pugx.org/javihgil/doctrine-pagination/v/unstable.svg)](https://packagist.org/packages/javihgil/doctrine-pagination)
 [![License](https://poser.pugx.org/javihgil/doctrine-pagination/license.svg)](https://packagist.org/packages/javihgil/doctrine-pagination)
+[![PHP Version Require](http://poser.pugx.org/javihgil/doctrine-pagination/require/php)](https://packagist.org/packages/javihgil/doctrine-pagination)
 [![Total Downloads](https://poser.pugx.org/javihgil/doctrine-pagination/downloads)](https://packagist.org/packages/javihgil/doctrine-pagination)
 [![Build status](https://travis-ci.com/javihgil/doctrine-pagination.svg?branch=master)](https://travis-ci.com/javihgil/doctrine-pagination)
 
@@ -22,4 +23,4 @@ You can integrate with Symfony projects using [javihgil/doctrine-pagination-bund
 
 ## License
 
-This bundle is under the MIT license. See the complete license in the bundle LICENSE file.
+This bundle is under the MIT license. See the complete license in the bundle [LICENSE](LICENSE) file.
