@@ -4,33 +4,15 @@ namespace Jhg\DoctrinePagination\Collection;
 
 use Doctrine\Common\Collections\ArrayCollection;
 
-/**
- * Class PaginatedArrayCollection
- */
 class PaginatedArrayCollection extends ArrayCollection
 {
-    /**
-     * @var int
-     */
-    protected $page;
+    protected ?int $page;
 
-    /**
-     * @var int
-     */
-    protected $rpp;
+    protected ?int $rpp;
 
-    /**
-     * @var int
-     */
-    protected $total;
+    protected ?int $total;
 
-    /**
-     * @param array $elements
-     * @param null  $page
-     * @param int   $rpp
-     * @param null  $total
-     */
-    public function __construct(array $elements = [], $page = null, $rpp = 10, $total = null)
+    public function __construct(array $elements = [], ?int $page = null, ?int $rpp = 10, ?int $total = null)
     {
         $this->page = $page;
         $this->rpp = $rpp;
@@ -39,37 +21,25 @@ class PaginatedArrayCollection extends ArrayCollection
         parent::__construct($elements);
     }
 
-    /**
-     * @return int
-     */
-    public function getPage()
+    public function getPage(): ?int
     {
         return $this->page;
     }
 
-    /**
-     * @return int
-     */
-    public function getRpp()
+    public function getRpp(): ?int
     {
         return $this->rpp;
     }
 
-    /**
-     * @return int
-     */
-    public function getTotal()
+    public function getTotal(): ?int
     {
         return $this->total;
     }
 
-    /**
-     * @return int|0
-     */
-    public function getPages()
+    public function getPages(): int
     {
         if (!$this->getRpp()) {
-            throw new \LogicException('Rpp was not setted');
+            throw new \LogicException('Rpp was not set');
         }
 
         if (!$this->getTotal()) {
@@ -79,10 +49,7 @@ class PaginatedArrayCollection extends ArrayCollection
         return ceil($this->total / $this->rpp);
     }
 
-    /**
-     * @return int
-     */
-    public function getFirstPage()
+    public function getFirstPage(): ?int
     {
         if (0 == $this->getPages()) {
             return null;
@@ -91,10 +58,7 @@ class PaginatedArrayCollection extends ArrayCollection
         return 1;
     }
 
-    /**
-     * @return int
-     */
-    public function getLastPage()
+    public function getLastPage(): ?int
     {
         if (0 == $this->getPages()) {
             return null;
@@ -103,10 +67,7 @@ class PaginatedArrayCollection extends ArrayCollection
         return $this->getPages();
     }
 
-    /**
-     * @return int|null
-     */
-    public function getNextPage()
+    public function getNextPage(): ?int
     {
         if (!$this->isLastPage()) {
             return $this->getPage() + 1;
@@ -115,10 +76,7 @@ class PaginatedArrayCollection extends ArrayCollection
         return null;
     }
 
-    /**
-     * @return int|null
-     */
-    public function getPrevPage()
+    public function getPrevPage(): ?int
     {
         if (!$this->isFirstPage()) {
             return $this->getPage() - 1;
@@ -127,18 +85,12 @@ class PaginatedArrayCollection extends ArrayCollection
         return null;
     }
 
-    /**
-     * @return bool
-     */
-    public function isFirstPage()
+    public function isFirstPage(): bool
     {
         return $this->getPage() == 1;
     }
 
-    /**
-     * @return bool
-     */
-    public function isLastPage()
+    public function isLastPage(): bool
     {
         return !$this->getPages() || $this->getPage() == $this->getPages();
     }

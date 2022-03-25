@@ -14,7 +14,7 @@ This library provides a paginated repository and collection for Doctrine.
 Open a command console, enter your project directory and execute:
 
 ```console
-$ composer require javihgil/doctrine-pagination:^1.1@dev
+$ composer require javihgil/doctrine-pagination:^2.0@dev
 ```
 
 # Configure Repository

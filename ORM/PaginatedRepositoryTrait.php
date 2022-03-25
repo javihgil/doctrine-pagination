@@ -8,16 +8,7 @@ use Jhg\DoctrinePagination\Collection\PaginatedArrayCollection;
 
 trait PaginatedRepositoryTrait
 {
-    /**
-     * @param int        $page
-     * @param int        $rpp
-     * @param array      $criteria
-     * @param array|null $orderBy
-     * @param int        $hydrateMode
-     *
-     * @return PaginatedArrayCollection
-     */
-    public function findPageBy(int $page, int $rpp, array $criteria = [], array $orderBy = null, $hydrateMode = AbstractQuery::HYDRATE_OBJECT): PaginatedArrayCollection
+    public function findPageBy(int $page, int $rpp, array $criteria = [], array $orderBy = null, int $hydrateMode = AbstractQuery::HYDRATE_OBJECT): PaginatedArrayCollection
     {
         $qb = $this->createPaginatedQueryBuilder($criteria, null, $orderBy);
         $qb->addSelect($this->getEntityAlias());
@@ -40,11 +31,6 @@ trait PaginatedRepositoryTrait
         return new PaginatedArrayCollection($results, $page, $rpp, $total);
     }
 
-    /**
-     * @param array $criteria
-     *
-     * @return int
-     */
     public function countBy(array $criteria = []): int
     {
         try {
@@ -57,13 +43,6 @@ trait PaginatedRepositoryTrait
         }
     }
 
-    /**
-     * @param array       $criteria
-     * @param string|null $indexBy
-     * @param array|null  $orderBy
-     *
-     * @return PaginatedQueryBuilder
-     */
     protected function createPaginatedQueryBuilder(array $criteria = [], ?string $indexBy = null, ?array $orderBy = null): PaginatedQueryBuilder
     {
         $qb = new PaginatedQueryBuilder($this->_em);
@@ -74,10 +53,6 @@ trait PaginatedRepositoryTrait
         return $qb;
     }
 
-    /**
-     * @param PaginatedQueryBuilder $qb
-     * @param array                 $criteria
-     */
     protected function processCriteria(PaginatedQueryBuilder $qb, array $criteria): void
     {
         if ($this instanceof FilterRepositoryInterface) {
@@ -98,10 +73,6 @@ trait PaginatedRepositoryTrait
         }
     }
 
-    /**
-     * @param PaginatedQueryBuilder $qb
-     * @param array|null            $orderBy
-     */
     protected function processOrderBy(PaginatedQueryBuilder $qb, ?array $orderBy = null): void
     {
         if (is_array($orderBy)) {
@@ -109,9 +80,6 @@ trait PaginatedRepositoryTrait
         }
     }
 
-    /**
-     * @return string
-     */
     protected function getEntityAlias(): string
     {
         $entityName = explode('\\', $this->_entityName);

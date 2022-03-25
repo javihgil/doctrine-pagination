@@ -4,9 +4,6 @@ namespace Jhg\DoctrinePagination\ORM;
 
 trait PaginatedRepositoryFindByTrait
 {
-    /**
-     * {@inheritdoc}
-     */
     public function findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
     {
         if ($offset !== null && $limit !== null && $limit > 0) {
