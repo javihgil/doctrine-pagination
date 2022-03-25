@@ -13,8 +13,8 @@ This library provides a paginated repository and collection for Doctrine.
 * [1. Installation](docs/1_installation.md)
 * [2. Configure repository](docs/2_configure_repository.md)
 * [3. Using paginated repository](docs/3_using_paginated_repository.md)
-* [3. Using paginated collections](docs/4_using_paginated_collections.md)
-* 5. Filter trait (TODO)
+* [4. Using paginated collections](docs/4_using_paginated_collections.md)
+* 5\. Filter trait (TODO)
 
 ## Symfony integration
 
